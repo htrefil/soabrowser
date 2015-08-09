@@ -1,0 +1,25 @@
+<RCC>
+    <qresource prefix="/images">
+        <file>resources/banner.png</file>
+        <file>resources/repo.png</file>
+        <file>resources/repo_new.png</file>
+        <file>resources/repo_open.png</file>
+        <file>resources/icon.png</file>
+        <file>resources/runtime.png</file>
+        <file>resources/app.png</file>
+        <file>resources/org.png</file>
+        <file>resources/unit.png</file>
+        <file>resources/service.png</file>
+        <file>resources/realization.png</file>
+        <file>resources/outline.png</file>
+        <file>resources/infrastructure.png</file>
+        <file>resources/app1.png</file>
+        <file>resources/app2.png</file>
+        <file>resources/end.png</file>
+        <file>resources/end2.png</file>
+        <file>resources/org2.png</file>
+        <file>resources/service1.png</file>
+        <file>resources/service2.png</file>
+        <file>resources/unit2.png</file>
+    </qresource>
+</RCC>

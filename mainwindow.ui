@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1021</width>
+    <height>529</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <property name="spacing">
+     <number>2</number>
+    </property>
+    <property name="leftMargin">
+     <number>2</number>
+    </property>
+    <property name="topMargin">
+     <number>2</number>
+    </property>
+    <property name="rightMargin">
+     <number>2</number>
+    </property>
+    <property name="bottomMargin">
+     <number>2</number>
+    </property>
+    <item>
+     <widget class="QTabWidget" name="tabWidget">
+      <property name="currentIndex">
+       <number>-1</number>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1021</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <widget class="QMenu" name="menuImport">
+     <property name="title">
+      <string>Import</string>
+     </property>
+     <addaction name="actionImport_CentraSite_report"/>
+     <addaction name="separator"/>
+     <addaction name="actionImport_portfolio"/>
+     <addaction name="actionImport_scheme"/>
+    </widget>
+    <addaction name="actionLoad_repository"/>
+    <addaction name="actionNew_repository"/>
+    <addaction name="separator"/>
+    <addaction name="actionSave_repository"/>
+    <addaction name="actionClose_repository"/>
+    <addaction name="separator"/>
+    <addaction name="menuImport"/>
+    <addaction name="separator"/>
+    <addaction name="actionSelect_logging_directory"/>
+    <addaction name="separator"/>
+    <addaction name="actionQuit"/>
+   </widget>
+   <widget class="QMenu" name="menuViews">
+    <property name="title">
+     <string>Views</string>
+    </property>
+    <addaction name="actionAdd_2D_graph"/>
+    <addaction name="actionAdd_2_5D_graph"/>
+    <addaction name="actionAdd_3D_graph"/>
+   </widget>
+   <widget class="QMenu" name="menuHelp">
+    <property name="title">
+     <string>Help</string>
+    </property>
+    <addaction name="actionWelcome_to_SoaScape"/>
+    <addaction name="separator"/>
+    <addaction name="actionAbout_SoaScape"/>
+   </widget>
+   <addaction name="menuFile"/>
+   <addaction name="menuViews"/>
+   <addaction name="menuHelp"/>
+  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+  <action name="actionQuit">
+   <property name="text">
+    <string>Quit</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Q</string>
+   </property>
+  </action>
+  <action name="actionNew_repository">
+   <property name="text">
+    <string>New repository...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+N</string>
+   </property>
+  </action>
+  <action name="actionLoad_repository">
+   <property name="text">
+    <string>Load repository...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+O</string>
+   </property>
+  </action>
+  <action name="actionAdd_2D_graph">
+   <property name="text">
+    <string>Add 2D graph</string>
+   </property>
+  </action>
+  <action name="actionAdd_2_5D_graph">
+   <property name="text">
+    <string>Add 2.5D graph</string>
+   </property>
+  </action>
+  <action name="actionAdd_3D_graph">
+   <property name="text">
+    <string>Add 3D graph</string>
+   </property>
+  </action>
+  <action name="actionSave_repository">
+   <property name="text">
+    <string>Save repository</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
+   </property>
+  </action>
+  <action name="actionWelcome">
+   <property name="text">
+    <string>Welcome...</string>
+   </property>
+  </action>
+  <action name="actionAbout_SoaScape">
+   <property name="text">
+    <string>About SoaScape...</string>
+   </property>
+  </action>
+  <action name="actionWelcome_to_SoaScape">
+   <property name="text">
+    <string>Welcome to SoaScape...</string>
+   </property>
+  </action>
+  <action name="actionAsset_tree">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Asset tree</string>
+   </property>
+  </action>
+  <action name="actionProperty_grid">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Property grid</string>
+   </property>
+  </action>
+  <action name="actionClose_repository">
+   <property name="text">
+    <string>Close repository</string>
+   </property>
+  </action>
+  <action name="actionLoad_Layer7">
+   <property name="text">
+    <string>Load Layer7...</string>
+   </property>
+  </action>
+  <action name="actionSelect_logging_directory">
+   <property name="text">
+    <string>Select logging directory...</string>
+   </property>
+  </action>
+  <action name="actionImport_portfolio">
+   <property name="text">
+    <string>Import portfolio...</string>
+   </property>
+  </action>
+  <action name="actionImport_CentraSite_report">
+   <property name="text">
+    <string>Import CentraSite report...</string>
+   </property>
+  </action>
+  <action name="actionImport_scheme">
+   <property name="text">
+    <string>Import schema...</string>
+   </property>
+  </action>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources/>
+ <connections/>
+</ui>
