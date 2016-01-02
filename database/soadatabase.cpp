@@ -76,6 +76,7 @@ SoaDb::SoaDb() : selId(1), changeId(0), selTb(0) {
 	back()->AddCl(SoaCl("sourceURL", sctTxt));
 	back()->AddCl(SoaCl("external", sctInt));
 	back()->AddCl(SoaCl(Tb("BusinessUnit"), SoaClSc("BusinessUnit")));
+	back()->AddCl(SoaCl("singleUser", sctInt));
 
 	push_back(new SoaTb(this, "Service"));
 	back()->AddCl(SoaCl("name", sctTxt, SoaClSc("Name")), 1);
@@ -173,6 +174,7 @@ SoaDb::SoaDb() : selId(1), changeId(0), selTb(0) {
 	back()->AddCl(SoaCl(Tb("Endpoint"), SoaClSc("Endpoint")));	// !
 	back()->AddCl(SoaCl(Tb("DeployedApplication"), SoaClSc("DeployedApplication")));	// !
 	back()->AddCl(SoaCl("sourceURL", sctTxt));
+	back()->AddCl(SoaCl("createdManually", sctInt));
 
 	//
 	// viewing hints

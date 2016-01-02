@@ -60,12 +60,12 @@ class WgNode	// application asset
 public:
 	float p[3];
 	unsigned int id, ts;
-	bool selected, external;
+	bool selected, external, multiuser;
 	QString title;
 	HiData hi;
 
-	WgNode(unsigned int _id, unsigned int _ts, bool _selected, bool _external, const QString &_title) :
-		id(_id), ts(_ts), selected(_selected), external(_external), title(_title) {
+	WgNode(unsigned int _id, unsigned int _ts, bool _selected, bool _external, bool _multiuser, const QString &_title) :
+		id(_id), ts(_ts), selected(_selected), external(_external), multiuser(_multiuser), title(_title) {
 
 		p[0] = rand() * 100.0f / RAND_MAX;
 		p[1] = rand() * 100.0f / RAND_MAX;
@@ -88,7 +88,7 @@ public:
 	bool hilit;
 
 	WgSubNode(unsigned _id, unsigned _ts, bool _selected, bool _external, const QString &_title, unsigned int _imId) :
-		WgNode(_id, _ts, _selected, _external, _title), im(_imId), hilit(false) {}
+		WgNode(_id, _ts, _selected, _external, false, _title), im(_imId), hilit(false) {}
 
 	bool operator!=(const IgSubNode &ig) const {
 		return ts != ig.ts || im.id != ig.im;
@@ -155,9 +155,9 @@ private:
 	int mouseTravel, hilitNodes, viewport[4], ht1, ht2;
 	unsigned int hoverNode, domainId;
 	double projection[16], model[16];
-    TextureFont fnt;
+	TextureFont fnt;
 
-    void initializeGL();
+	void initializeGL();
 	void setupGL();
 	void paintGL();
 	void selectGL(int, int, bool, bool);
@@ -190,7 +190,8 @@ private:
 	static void SetSubNodeColor(unsigned char, bool, bool);
 	static void DrawRectangle(unsigned int, float, float, float, float, float);
 	static void DrawEllipse(unsigned int, float, float, float);
-	static void DrawNode(float, float, float, bool);
+	static void DrawNode(float, float, float, float, float, int);
+	static void DrawMultiuserNode(float, float, float, int);
 	static void DrawSubNode(float, float, bool);
 	void DrawTooltip(const QString &, double, double);
 

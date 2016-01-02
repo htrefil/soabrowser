@@ -25,6 +25,7 @@ void WdgGraph::Refresh(unsigned int _domainId) {
 
 				node->selected = nodeIt->second.selected;
 				node->external = nodeIt->second.external;
+				node->multiuser = nodeIt->second.multiuser;
 
 				// row found, refresh node
 
@@ -56,6 +57,7 @@ void WdgGraph::Refresh(unsigned int _domainId) {
 					nodeIt->second.ts,
 					nodeIt->second.selected,
 					nodeIt->second.external,
+					nodeIt->second.multiuser,
 					QString::fromUtf8(nodeIt->second.text.c_str())));
 
 				needsRelax = needsBoundsUpdate = true;

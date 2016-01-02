@@ -26,7 +26,7 @@ void WdgGraph::initializeGL() {
 	glFogf(GL_FOG_START, 50.f);
 	glFogf(GL_FOG_END, 150.f);
 
-    fnt.Load();
+	fnt.Load();
 }
 
 void WdgGraph::setupGL() {
@@ -78,8 +78,12 @@ void WdgGraph::paintGL() {
 			glRotatef(-rotation.y, 0.0f, 0.0f, 1.0f);
 			glRotatef(-rotation.x, 1.0f, 0.0f, 0.0f);
 			WdgGraph::SetNodeColor(255, node->selected, node->external);
-			WdgGraph::DrawNode(6.0f, 4.0f, 2.0f, true);
-		//	DrawTooltip(node->title);
+			if (node->multiuser) {
+				WdgGraph::DrawMultiuserNode(6, 4, 2, 1);
+				WdgGraph::DrawMultiuserNode(6, 4, 2, 2);
+			}
+			else
+				WdgGraph::DrawNode(6.0f, 4.0f, 2.0f, 0, 0, 3);
 			glPopMatrix();
 		}
 	}
@@ -159,7 +163,12 @@ void WdgGraph::paintGL() {
 			glRotatef(-rotation.y, 0.0f, 0.0f, 1.0f);
 			glRotatef(-rotation.x, 1.0f, 0.0f, 0.0f);
 			WdgGraph::SetNodeColor(40, node->selected, node->external);
-			WdgGraph::DrawNode(6.0f, 4.0f, 2.0f, true);
+			if (node->multiuser) {
+				WdgGraph::DrawMultiuserNode(6, 4, 2, 1);
+				WdgGraph::DrawMultiuserNode(6, 4, 2, 2);
+			}
+			else
+				WdgGraph::DrawNode(6.0f, 4.0f, 2.0f, 0, 0, 3);
 			glPopMatrix();
 		}
 	}
@@ -333,7 +342,10 @@ void WdgGraph::selectGL(int scrX, int scrY, bool mod, bool commit) {
 		glRotatef(-rotation.y, 0.0f, 0.0f, 1.0f);
 		glRotatef(-rotation.x, 1.0f, 0.0f, 0.0f);
 		glColor4ub(13, 0, nodeIndex++, 255);
-		WdgGraph::DrawNode(6.0f, 4.0f, 2.0f, false);
+		if (node->multiuser)
+			WdgGraph::DrawMultiuserNode(6, 4, 2, 1);
+		else
+			WdgGraph::DrawNode(6.0f, 4.0f, 2.0f, 0, 0, 1);
 		glPopMatrix();
 	}
 
@@ -477,17 +489,26 @@ void WdgGraph::DrawEllipse(unsigned int mode, float z, float w, float h) {
 	glEnd();
 }
 
-void WdgGraph::DrawNode(float w, float h, float z, bool edges) {
-	WdgGraph::DrawRectangle(GL_QUADS, 0.0f, 0.0f, z, w, h);
-	WdgGraph::DrawRectangle(GL_QUADS, -w, h * 0.4f, z + 0.4f, w * 0.2f, h * 0.2f);
-	WdgGraph::DrawRectangle(GL_QUADS, -w, -h * 0.4f, z + 0.4f, w * 0.2f, h * 0.2f);
-	if (edges) {
+void WdgGraph::DrawNode(float w, float h, float z, float dx, float dy, int mode) {
+	if (mode & 1) {
+		WdgGraph::DrawRectangle(GL_QUADS, dx, dy, z, w, h);
+		WdgGraph::DrawRectangle(GL_QUADS, -w + dx, h * 0.4f + dy, z + 0.4f, w * 0.2f, h * 0.2f);
+		WdgGraph::DrawRectangle(GL_QUADS, -w + dx, -h * 0.4f + dy, z + 0.4f, w * 0.2f, h * 0.2f);
+	}
+	if (mode & 2) {
 		z += 0.02f;
 		glColor4ub(0, 0, 0, alpha);
-		WdgGraph::DrawRectangle(GL_LINE_LOOP, 0.0f, 0.0f, z, w, h);
-		WdgGraph::DrawRectangle(GL_LINE_LOOP, -w, h * 0.4f, z + 0.4f, w * 0.2f, h * 0.2f);
-		WdgGraph::DrawRectangle(GL_LINE_LOOP, -w, -h * 0.4f, z + 0.4f, w * 0.2f, h * 0.2f);
+		WdgGraph::DrawRectangle(GL_LINE_LOOP, dx, dy, z, w, h);
+		WdgGraph::DrawRectangle(GL_LINE_LOOP, -w + dx, h * 0.4f + dy, z + 0.4f, w * 0.2f, h * 0.2f);
+		WdgGraph::DrawRectangle(GL_LINE_LOOP, -w + dx, -h * 0.4f + dy, z + 0.4f, w * 0.2f, h * 0.2f);
 	}
+
+}
+
+void WdgGraph::DrawMultiuserNode(float w, float h, float z, int mode) {
+	DrawNode(w, h, z, -1.5, -1.5, mode);
+	DrawNode(w, h, z - 0.5, 0, 0, mode);
+	DrawNode(w, h, z - 1, 1.5, 1.5, mode);
 }
 
 void WdgGraph::DrawSubNode(float w, float h, bool edges) {
@@ -502,7 +523,7 @@ void WdgGraph::DrawTooltip(const QString &text, double x, double y) {
 
 	glTranslated(x + TT_MARGIN, y + TT_MARGIN, 0.0);
 
-    int h = fnt.h, w = fnt.w * text.size();
+	int h = fnt.h, w = fnt.w * text.size();
 
 	glColor4ub(250, 230, 200, 200);
 	glBegin(GL_QUADS);
@@ -520,6 +541,6 @@ void WdgGraph::DrawTooltip(const QString &text, double x, double y) {
 	glVertex2i(w + TT_MARGIN, -TT_MARGIN);
 	glEnd();
 
-    glColor4ub(0, 0, 0, 255);
-    fnt.PaintText(text.toStdString(), 0.0, 0.0);
+	glColor4ub(0, 0, 0, 255);
+	fnt.PaintText(text.toStdString(), 0.0, 0.0);
 }

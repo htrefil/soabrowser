@@ -13,8 +13,6 @@ WdgTree::WdgTree(SoaWg *_wg, IViewable *_iv) : QTreeWidget(_wg),
 	setContextMenuPolicy(Qt::CustomContextMenu);
 	setMouseTracking(true);
 	setAcceptDrops(true);
-    setSortingEnabled(true);
-    sortByColumn(0, Qt::AscendingOrder);
 
 	// tree columns
 
@@ -47,8 +45,8 @@ bool WdgTree::RefreshItems(QTreeWidgetItem *parentIt, std::map<unsigned int, ItI
 	int index = 0;
 	while (index < parentIt->childCount()) {
 
-        WdgTreeItem *childIt = (WdgTreeItem *)parentIt->child(index);
-        ItItemMap::iterator itemIt = itemMap.find(childIt->id);
+		WdgTreeItem *childIt = (WdgTreeItem *)parentIt->child(index);
+		ItItemMap::iterator itemIt = itemMap.find(childIt->id);
 
 		if (itemIt != itemMap.end()) {
 
@@ -59,20 +57,20 @@ bool WdgTree::RefreshItems(QTreeWidgetItem *parentIt, std::map<unsigned int, ItI
 				scrollToItem(childIt);
 			}
 
-            childIt->setSelected(itemIt->second.selected);
-            if (itemIt->second.selected)
-                expandParent = true;
+			childIt->setSelected(itemIt->second.selected);
+			if (itemIt->second.selected)
+				expandParent = true;
 
 			selectionGuard = false;
 
 			SetIcon(childIt, itemIt->second.icon);
 
-            childIt->setText(0, QString::fromUtf8(itemIt->second.text.c_str()));
+			childIt->setText(0, QString::fromUtf8(itemIt->second.text.c_str()));
 
-            if (childIt->ts != itemIt->second.ts)
-                childIt->ts = itemIt->second.ts;
+			if (childIt->ts != itemIt->second.ts)
+				childIt->ts = itemIt->second.ts;
 
-            childIt->en = itemIt->second.enabled;
+			childIt->en = itemIt->second.enabled;
 
 			if (RefreshItems(childIt, itemIt->second.children)) {
 				expandItem(childIt);
@@ -91,12 +89,12 @@ bool WdgTree::RefreshItems(QTreeWidgetItem *parentIt, std::map<unsigned int, ItI
 
 	for (ItItemMap::iterator itemIt = itemMap.begin(); itemIt != itemMap.end(); ++itemIt) {
 
-        WdgTreeItem *item = new WdgTreeItem(parentIt,
-                                            QStringList(QString::fromUtf8(itemIt->second.text.c_str())),
-                                            itemIt->second.sortby);
-        item->id = itemIt->first;
-        item->ts = itemIt->second.ts;
-        item->en = itemIt->second.enabled;
+		WdgTreeItem *item = new WdgTreeItem(parentIt,
+											QStringList(QString::fromUtf8(itemIt->second.text.c_str())),
+											itemIt->second.sortby);
+		item->id = itemIt->first;
+		item->ts = itemIt->second.ts;
+		item->en = itemIt->second.enabled;
 		SetIcon(item, itemIt->second.icon);
 
 		RefreshItems(item, itemIt->second.children);

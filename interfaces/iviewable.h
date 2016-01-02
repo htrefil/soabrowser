@@ -27,10 +27,10 @@ class SoaRw;
 struct IgNode
 {
 	unsigned int ts;
-	bool selected, external;
+	bool selected, external, multiuser;
 	std::string text;
-	IgNode(unsigned int _ts, bool _selected, bool _external, const std::string &_text) :
-		ts(_ts), selected(_selected), external(_external), text(_text) {}
+	IgNode(unsigned int _ts, bool _selected, bool _external, bool _multiuser, const std::string &_text) :
+		ts(_ts), selected(_selected), external(_external), multiuser(_multiuser), text(_text) {}
 };
 
 struct IgSubNode
@@ -81,16 +81,16 @@ struct ItItem
 	std::string text;
 	std::map<unsigned int, ItItem> children;
 	bool enabled;
-    int icon, sortby;
-    ItItem(unsigned int _ts, bool _selected, const std::string &_text, bool _enabled = true, int _icon = -1, int _sortby = 1) :
-        ts(_ts), selected(_selected), text(_text), enabled(_enabled), icon(_icon), sortby(_sortby) {}
+	int icon, sortby;
+	ItItem(unsigned int _ts, bool _selected, const std::string &_text, bool _enabled = true, int _icon = -1, int _sortby = 1) :
+		ts(_ts), selected(_selected), text(_text), enabled(_enabled), icon(_icon), sortby(_sortby) {}
 };
 
 class ItItemMap : public std::map<unsigned int, ItItem>
 {
 public:
-    unsigned int in;
-    ItItemMap(unsigned int _in) : in(_in) {}
+	unsigned int in;
+	ItItemMap(unsigned int _in) : in(_in) {}
 };
 typedef std::pair<unsigned int, ItItem>	ItItemPair;
 
@@ -190,7 +190,7 @@ public:
 
 	// selection
 
-    virtual void DeselectAll() = 0;
+	virtual void DeselectAll() = 0;
 	virtual void InvertRowSelection(unsigned int) = 0;
 	virtual unsigned int SelectedDomain() = 0;
 	virtual std::string SelectedDomainName() = 0;

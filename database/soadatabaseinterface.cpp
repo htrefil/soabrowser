@@ -20,6 +20,7 @@ IgNodeMap SoaDb::NodeMap(int filter, unsigned int domainId) {
 				(*row)->viewTs,
 				(*row)->selId == selId,
 				(*row)->Ce("BusinessUnit")->Row()->Ce("Organization")->Row() != org,
+				(*row)->Ce("singleUser")->Num() == 0,
 				(*row)->Name()
 			)));
 	}
@@ -30,11 +31,12 @@ IgNodeMap SoaDb::NodeMap(int filter, unsigned int domainId) {
 				(*row)->viewTs,
 				(*row)->selId == selId,
 				(*row)->Ce("Application")->Row()->Ce("BusinessUnit")->Row()->Ce("Organization")->Row() != org,
+				(*row)->Ce("Application")->Row()->Ce("singleUser")->Num() == 0,
 				(*row)->Name()
 			)));
 	}
 	else if (filter == fmRuntime) {
-        SoaTb *nodes = Tb("DeployedApplication");
+		SoaTb *nodes = Tb("DeployedApplication");
 		for (SoaRwList::iterator row = nodes->begin(); row != nodes->end(); ++row) {
 			SoaRw *domain = (*row)->Ce("ServiceDomain")->Row();
 			if (domain && domain->ViewId() == domainId) {
@@ -43,6 +45,7 @@ IgNodeMap SoaDb::NodeMap(int filter, unsigned int domainId) {
 					(*row)->viewTs,
 					(*row)->selId == selId,
 					(*row)->Ce("ApplicationVersion")->Row()->Ce("Application")->Row()->Ce("external")->Num() != 0,
+					(*row)->Ce("ApplicationVersion")->Row()->Ce("Application")->Row()->Ce("singleUser")->Num() == 0,
 					(*row)->Name()
 				)));
 			}
@@ -172,15 +175,15 @@ ItItemMap SoaDb::ItemMap(int filter, unsigned int domainId) {
 
 	bool externalOrg = false;
 
-    int i = 0;
+	int i = 0;
 	SoaTb *orgs = Tb("Organization");
 	for (SoaRwList::iterator org = orgs->begin(); org != orgs->end(); ++org) {
 		ItItemMap::iterator orgIt = itemMap.insert(ItItemPair((*org)->viewId, ItItem(
 			(*org)->viewTs,
 			(*org)->selId == selId,
 			(*org)->Ce("name")->Txt(),
-            true, externalOrg ? iiiOrg2 : iiiOrg, i++
-        ))).first;
+			true, externalOrg ? iiiOrg2 : iiiOrg, i++
+		))).first;
 
 		const SoaRwList *depts = (*org)->Children("BusinessUnit");
 		for (SoaRwList::const_iterator dept = depts->begin(); dept != depts->end(); ++dept) {
