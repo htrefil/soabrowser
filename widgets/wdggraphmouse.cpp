@@ -42,8 +42,10 @@ void WdgGraph::mouseMoveEvent(QMouseEvent *event) {
 void WdgGraph::mouseReleaseEvent(QMouseEvent *event) {
 
 	if (event->button() == Qt::LeftButton) {
-		if (mouseTravel < 5)
+        if (mouseTravel < 5) {
+            setFocus();
 			selectGL(event->x(), event->y(), event->modifiers() & Qt::ControlModifier, true);
+        }
 	}
 	else if (event->button() == Qt::RightButton)
 		if (mouseTravel < 5)
