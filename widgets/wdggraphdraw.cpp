@@ -77,13 +77,13 @@ void WdgGraph::paintGL() {
 			glTranslatef(node->p[0], node->p[1], node->p[2]);
 			glRotatef(-rotation.y, 0.0f, 0.0f, 1.0f);
 			glRotatef(-rotation.x, 1.0f, 0.0f, 0.0f);
-			WdgGraph::SetNodeColor(255, node->selected, node->external);
-			if (node->multiuser) {
-				WdgGraph::DrawMultiuserNode(6, 4, 2, 1);
-				WdgGraph::DrawMultiuserNode(6, 4, 2, 2);
-			}
-			else
-				WdgGraph::DrawNode(6.0f, 4.0f, 2.0f, 0, 0, 3);
+            WdgGraph::SetNodeColor(255, node->selected, node->external, node->multiuser);
+            if (node->multiuser)
+                WdgGraph::DrawNode(6.0f, 4.0f, 2.0f, 0, 0, 3);
+            else {
+                WdgGraph::DrawMultiuserNode(6, 4, 2, 1);
+                WdgGraph::DrawMultiuserNode(6, 4, 2, 2);
+            }
 			glPopMatrix();
 		}
 	}
@@ -162,13 +162,13 @@ void WdgGraph::paintGL() {
 			glTranslatef(node->p[0], node->p[1], node->p[2]);
 			glRotatef(-rotation.y, 0.0f, 0.0f, 1.0f);
 			glRotatef(-rotation.x, 1.0f, 0.0f, 0.0f);
-			WdgGraph::SetNodeColor(40, node->selected, node->external);
-			if (node->multiuser) {
-				WdgGraph::DrawMultiuserNode(6, 4, 2, 1);
-				WdgGraph::DrawMultiuserNode(6, 4, 2, 2);
-			}
-			else
-				WdgGraph::DrawNode(6.0f, 4.0f, 2.0f, 0, 0, 3);
+            WdgGraph::SetNodeColor(40, node->selected, node->external, node->multiuser);
+            if (node->multiuser)
+                WdgGraph::DrawNode(6.0f, 4.0f, 2.0f, 0, 0, 3);
+            else {
+                WdgGraph::DrawMultiuserNode(6, 4, 2, 1);
+                WdgGraph::DrawMultiuserNode(6, 4, 2, 2);
+            }
 			glPopMatrix();
 		}
 	}
@@ -343,9 +343,9 @@ void WdgGraph::selectGL(int scrX, int scrY, bool mod, bool commit) {
 		glRotatef(-rotation.x, 1.0f, 0.0f, 0.0f);
 		glColor4ub(13, 0, nodeIndex++, 255);
 		if (node->multiuser)
-			WdgGraph::DrawMultiuserNode(6, 4, 2, 1);
+            WdgGraph::DrawNode(6.0f, 4.0f, 2.0f, 0, 0, 1);
 		else
-			WdgGraph::DrawNode(6.0f, 4.0f, 2.0f, 0, 0, 1);
+            WdgGraph::DrawMultiuserNode(6, 4, 2, 1);
 		glPopMatrix();
 	}
 
@@ -457,11 +457,12 @@ void WdgGraph::resizeGL(int width, int height) {
 // static
 //
 
-void WdgGraph::SetNodeColor(unsigned char _alpha, bool selected, bool external) {
+void WdgGraph::SetNodeColor(unsigned char _alpha, bool selected, bool external, bool multiuser) {
 	alpha = _alpha;
 	if (selected)		glColor4ub(250, 230, 0, _alpha);
 	else if (external)	glColor4ub(124, 183, 193, _alpha);
-	else				glColor4ub(240, 0, 0, _alpha);
+    else if (multiuser)	glColor4ub(240, 0, 0, _alpha);
+    else				glColor4ub(234, 94, 33, _alpha);
 }
 
 void WdgGraph::SetSubNodeColor(unsigned char _alpha, bool selected, bool external) {
@@ -497,7 +498,7 @@ void WdgGraph::DrawNode(float w, float h, float z, float dx, float dy, int mode)
 	}
 	if (mode & 2) {
 		z += 0.02f;
-		glColor4ub(0, 0, 0, alpha);
+        glColor4ub(255, 255, 255, alpha);
 		WdgGraph::DrawRectangle(GL_LINE_LOOP, dx, dy, z, w, h);
 		WdgGraph::DrawRectangle(GL_LINE_LOOP, -w + dx, h * 0.4f + dy, z + 0.4f, w * 0.2f, h * 0.2f);
 		WdgGraph::DrawRectangle(GL_LINE_LOOP, -w + dx, -h * 0.4f + dy, z + 0.4f, w * 0.2f, h * 0.2f);

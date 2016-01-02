@@ -186,7 +186,7 @@ private:
 		return -1;
 	}
 
-	static void SetNodeColor(unsigned char, bool, bool);
+    static void SetNodeColor(unsigned char, bool, bool, bool);
 	static void SetSubNodeColor(unsigned char, bool, bool);
 	static void DrawRectangle(unsigned int, float, float, float, float, float);
 	static void DrawEllipse(unsigned int, float, float, float);
